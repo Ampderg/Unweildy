@@ -5,20 +5,28 @@ using UnityEngine;
 public class HitboxIgnorePushbox : BaseHitbox
 {
     [SerializeField]
-    private new GameObject collider;
+    private GameObject[] colliders;
 
     [SerializeField]
-    private float ignoreTime = 0.5f;
-    private float timer;
+    private GameObject[] toDisable;
+
+    [SerializeField]
+    private int ignoreTime = 30;
+    private int timer;
+
+    [SerializeField]
+    private MoveController move;
 
     [SerializeField]
     private int swapLayer = 12;
     private int oldLayer;
     public override void Trigger()
     {
-        oldLayer = collider.layer;
         timer = ignoreTime;
-        collider.layer = swapLayer;
+        foreach(GameObject collider in colliders)
+            collider.layer = swapLayer;
+        foreach (GameObject collider in toDisable)
+            collider.SetActive(false);
     }
 
     // Update is called once per frame
@@ -26,10 +34,19 @@ public class HitboxIgnorePushbox : BaseHitbox
     {
         if(timer > 0)
         {
-            timer -= Time.deltaTime;
+            timer--;
             if(timer <= 0)
             {
-                collider.layer = oldLayer;
+                foreach (GameObject collider in colliders)
+                {
+                    if (move != null)
+                        collider.layer = move.Layer;
+                    else
+                        collider.layer = oldLayer;
+                    
+                }
+                foreach (GameObject c in toDisable)
+                    c.SetActive(true);
             }
         }
     }

@@ -1,0 +1,5 @@
+A and D to move left and right
+SPACE to jump, hold to jump higher
+
+LEFT CLICK to do a light attack
+SHIFT to do a launch attack, hold to go farther

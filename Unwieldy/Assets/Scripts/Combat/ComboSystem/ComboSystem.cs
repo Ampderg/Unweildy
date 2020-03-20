@@ -5,20 +5,43 @@ using XboxCtrlrInput;
 
 public class ComboSystem : MonoBehaviour {
 
-    
+    public string defaultTop;
+
+    [SerializeField]
+    private Weapons weapons;
 
     [SerializeField]
     private AttackNode currentNode;
     [SerializeField]
     private AttackNode bufferNode;
 
+    public string currentWeapon;
     [SerializeField]
     private BaseNode treeTop;
     //public const int BUFFER_FRAMES = 10;
 
+    private void Awake()
+    {
+        ResetComboSystem();
+    }
+
     public bool ActionLock
     {
         get { return !(currentNode == null || currentNode.IsAttackFinished); }
+    }
+
+    private bool lastGrounded = false;
+    [SerializeField]
+    private BaseEntityController controller;
+
+    public void Update()
+    {
+        if(controller.move.Grounded != lastGrounded)
+        {
+            bufferNode = null;
+            DetachAttack();
+        }
+        lastGrounded = controller.move.Grounded;
     }
 
     public void Attack(InputType type, AttackTrigger trigger)
@@ -86,11 +109,19 @@ public class ComboSystem : MonoBehaviour {
         currentNode = null;
     }
 
-    public void Equip(BaseNode weapon)
+    public void Equip(string weapon)
     {
         //treeTop.gameObject.SetActive(false);
-        treeTop = weapon;
+        if(treeTop != null)
+            Destroy(treeTop.gameObject);
+        treeTop = weapons.EquipWeapon(weapon, this);
+        currentWeapon = weapon;
         //treeTop.gameObject.SetActive(true);
+    }
+
+    public void ResetComboSystem()
+    {
+        Equip(defaultTop);
     }
 }
 

@@ -1,0 +1,18 @@
+KEYBOARD/CONTROLLER
+keyboard controls red player, controller controls blue player
+
+A+D/LEFT JOYSTICK to move left and right
+SPACE/A to jump, hold to jump higher
+
+Hammer:
+LEFT CLICK/X to do a light attack, 
+   in the air it attacks in the direction your mouse or joystick is pointing
+SHIFT/Y to do a launch attach
+HOLD RIGHT CLICK/B to do a charge up attack, RELEASE to swing a devestating blow
+   that launches you backwards
+CONTROL/BUMPER to drop your weapon
+
+Unarmed:
+LEFT CLICK/X to do a weak punch
+SHIFT/Y to do a temporarily invincible roll
+HOLD RIGHT CLICK/B to pick up a dropped weapon

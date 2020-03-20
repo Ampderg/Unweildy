@@ -24,6 +24,14 @@ public abstract class BaseHitbox : MonoBehaviour
     protected bool allowLaunchStun = true;
     public abstract void Trigger();
 
+    public void SetLaunch(Vector2 min, Vector2 max)
+    {
+        minLaunch = min;
+        maxLaunch = max;
+    }
+
+    public virtual void Kill() { }
+
 }
 public class HitboxSequencePart : BaseHitbox
 {
@@ -56,9 +64,17 @@ public class HitboxSequencePart : BaseHitbox
     private ContactFilter2D contactFilter;
     [SerializeField]
     private LayerMask layerMask;
+
+    [SerializeField]
+    protected new Renderer renderer;
+    [SerializeField]
+    private bool reverseBasedOnUserFacing = true;
+
     private void Awake()
     {
         contactFilter.SetLayerMask(layerMask);
+
+        if (renderer != null) renderer.enabled = false;
     }
 
     public override void Trigger()
@@ -71,19 +87,30 @@ public class HitboxSequencePart : BaseHitbox
         {
             remainingFrames = frameDuration;
         }
+        if(renderer != null)
+        {
+            renderer.enabled = true;
+        }
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if(detection == DetectionType.ContinuousDetection && remainingFrames > 0)
         {
             if(remainingFrames % FRAME_EFFICIENCY == 0)
                 CheckHit();
 
-            remainingFrames--;
         }
+
+        if(remainingFrames <= 0)
+        {
+            if (renderer != null) renderer.enabled = false;
+        }
+
+        remainingFrames--;
+
     }
-    
+
     private void CheckHit()
     {
         List<Collider2D> hits = new List<Collider2D>();
@@ -92,7 +119,7 @@ public class HitboxSequencePart : BaseHitbox
         {
             Hurtbox h = hits[i].gameObject.GetComponent<Hurtbox>();
             if (h != null 
-                && (detection == DetectionType.InitialHit 
+                && h.hitParent != this.parentNode.controller.entity && (detection == DetectionType.InitialHit 
                 || (detection == DetectionType.ContinuousDetection && !parentNode.previousHitEntities.Contains(h.GetHitParent()))))
             {
 
@@ -102,11 +129,11 @@ public class HitboxSequencePart : BaseHitbox
                 if (useExplosionLaunch)
                 {
                     Vector2 m = (h.transform.position - explosionLaunchPoint.position);
-                    if(m.magnitude < 0.5f)
+                    if(m.magnitude < 0.4f)
                     {
                         m = Vector2.up;
                     }
-                    m = m.normalized;
+                    m.Normalize();
                     Vector2 m2 = m;
 
                     m *= minLaunch;
@@ -117,9 +144,12 @@ public class HitboxSequencePart : BaseHitbox
                 else
                 {
                     Vector2 m = minLaunch;
-                    m.x *= parentNode.controller.facing;
                     Vector2 m2 = maxLaunch;
-                    m2.x *= parentNode.controller.facing;
+                    if (reverseBasedOnUserFacing)
+                    {
+                        m.x *= parentNode.controller.facing;
+                        m2.x *= parentNode.controller.facing;
+                    }
                     h.Launch(m, m2, allowLaunchStun);
                 }
 
@@ -130,5 +160,12 @@ public class HitboxSequencePart : BaseHitbox
             }
         }
     }
+
+    public override void Kill()
+    {
+        remainingFrames = 0;
+    }
+
+
 }
 

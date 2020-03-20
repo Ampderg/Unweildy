@@ -63,80 +63,95 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\BaseEntityController.cs" />
+    <Compile Include="Assets\Scripts\Combat\ComboSystem\AnimatedHitboxSequencePart.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\AttackNode.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\BaseNode.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\CombatEntity.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\ComboSystem.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\GripBreakManager.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\HitboxIgnorePushbox.cs" />
+    <Compile Include="Assets\Scripts\Combat\ComboSystem\HitboxPickupItem.cs" />
+    <Compile Include="Assets\Scripts\Combat\ComboSystem\HitboxReverseFacing.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\HitboxSelfEffect.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\HitboxSequenceNode.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\HitboxSequencePart.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\Hurtbox.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\SplitterGrounded.cs" />
+    <Compile Include="Assets\Scripts\Combat\ComboSystem\UtilityFaceDirection.cs" />
+    <Compile Include="Assets\Scripts\Combat\ComboSystem\UtilityMoveDrift.cs" />
+    <Compile Include="Assets\Scripts\Combat\ComboSystem\UtilityUpdateFacing.cs" />
     <Compile Include="Assets\Scripts\Combat\ComboSystem\Weapons.cs" />
     <Compile Include="Assets\Scripts\Combat\EffectsSystem\BaseEffect.cs" />
     <Compile Include="Assets\Scripts\Combat\EffectsSystem\EffectsParticle.cs" />
+    <Compile Include="Assets\Scripts\Combat\Items\BaseItem.cs" />
+    <Compile Include="Assets\Scripts\Combat\Items\ItemWeaponPickup.cs" />
+    <Compile Include="Assets\Scripts\Combat\Killbox.cs" />
+    <Compile Include="Assets\Scripts\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\ObstactleController.cs" />
+    <Compile Include="Assets\Scripts\Physics\BaseMove.cs" />
     <Compile Include="Assets\Scripts\Physics\MoveController.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Utility\DestroyOnAudioFinish.cs" />
     <Compile Include="Assets\Scripts\Utility\FpsCounter.cs" />
     <Compile Include="Assets\Scripts\Utility\FpsManager.cs" />
+    <Compile Include="Assets\Scripts\Utility\MusicLooper.cs" />
+    <Compile Include="Assets\Scripts\Utility\StageHandler.cs" />
     <Reference Include="Unity.Timeline.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.UI">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Timeline">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
     </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-weaver.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/com.unity.multiplayer-weaver.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.XR.LegacyInputHelpers">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Rider.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.2D.Tilemap.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.SpatialTracking">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.SpatialTracking">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.XR.LegacyInputHelpers">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.UI">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
     </Reference>
     <Reference Include="com.unity.multiplayer-hlapi.Runtime">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/ScriptAssemblies/com.unity.multiplayer-hlapi.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>D:/Program Files/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
@@ -316,16 +331,16 @@
       <HintPath>D:/Program Files/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
     </Reference>
     <Reference Include="XInputDotNetPure">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Assets/Plugins/XInputDotNetPure.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Assets/Plugins/XInputDotNetPure.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Editor">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/PackageCache/com.unity.analytics@3.3.5/Unity.Analytics.Tracker.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.StandardEvents">
-      <HintPath>D:/Documents/Unity Projects/Unwieldy/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
+      <HintPath>D:/Documents/Unity Projects/UnweildyRepo/Unwieldy/Library/PackageCache/com.unity.analytics@3.3.5/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/2019.3.0f6/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

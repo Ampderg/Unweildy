@@ -8,7 +8,6 @@ using UnityEngine;
 class Hurtbox : IDamageable
 {
 
-    [SerializeField]
     public IDamageable hitParent;
 
     public override void Damage(int gripDamage, int hpDamage)

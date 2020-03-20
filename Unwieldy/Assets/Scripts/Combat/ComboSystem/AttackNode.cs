@@ -10,7 +10,7 @@ public class AttackNode : BaseNode {
     protected int elapsedFrames;
 
     [SerializeField]
-    protected int frameDuration;
+    public int frameDuration;
 
     //How many frames after the attack finishes can the user press a button to extend the combo?
     [SerializeField]
@@ -50,13 +50,14 @@ public class AttackNode : BaseNode {
                 if (!isAttackFinished)
                 {
                     isAttackFinished = true;
-
-                    OnAttackFinish.Invoke();
+                    if (OnAttackFinish != null)
+                        OnAttackFinish.Invoke();
                     //Debug.Log(Time.frameCount + " " + elapsedFrames + " - Finished attack: " + gameObject.name);
                 }
                 if (elapsedFrames > frameDuration + comboFrames)
                 {
-                    OnAttackDispose.Invoke();
+                    if(OnAttackDispose != null)
+                        OnAttackDispose.Invoke();
                     active = false;
                     //Debug.Log(Time.frameCount + " - Disposed attack: " + gameObject.name);
                 }

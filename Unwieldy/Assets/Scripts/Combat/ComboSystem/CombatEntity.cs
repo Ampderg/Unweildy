@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public abstract class IDamageable : MonoBehaviour
 {
@@ -26,9 +28,25 @@ class CombatEntity : IDamageable
     [SerializeField]
     private new Rigidbody2D rigidbody;
     public static float launchMultiplier = 80f;
-    public static float gravityScale = 4f;
+    public static float gravityScale = 3.7f;
+    public static float hitGravityCompensation = 2f;
+
+    [SerializeField]
+    private GameObject weaponDropPrefab;
+
+    private bool gripBroken;
+
+    public UnityEvent OnRespawn;
+
+    [SerializeField]
+    private float respawnDelay = 3;
+
     [SerializeField]
     private BaseEntityController controller;
+    [SerializeField]
+    private Text healthText;
+    [SerializeField]
+    private Text hpText;
     public float PercentHP
     {
         get { return (float)currentHp / maxHp; }
@@ -48,13 +66,19 @@ class CombatEntity : IDamageable
     }
     [SerializeField]
     private int stunFrames = 0;
+
+    [SerializeField]
+    private float verticalBounceFactor = 0.6f;
+
+    private bool inactive = false;
+
     public bool Stunned
     {
-        get { return stunFrames > 0; }
+        get { return stunFrames > 0 || inactive; }
     }
     public bool GripBroken
     {
-        get { return currentGrip == -1; }
+        get { return gripBroken; }
     }
 
     public float LaunchFactor
@@ -67,6 +91,8 @@ class CombatEntity : IDamageable
         }
     }
 
+    public bool IsDead { get { return killCo != null; } }
+
     private void Awake()
     {
         currentHp = maxHp;
@@ -74,20 +100,72 @@ class CombatEntity : IDamageable
     }
     private void Update()
     {
-        if (stunFrames > 0)
-            stunFrames--;
+        if (!inactive)
+        {
+            if(gripBroken && currentGrip > 500 && UnityEngine.Random.Range(500, MAX_GRIP) < currentGrip)
+            {
+                currentGrip--;
+            }
+
+            if (stunFrames > 0)
+                stunFrames--;
+
+            if (healthText != null)
+            {
+                if (GripBroken)
+                {
+                    healthText.text = "BROKEN";
+                }
+                else
+                {
+                    healthText.text = string.Format("{0:0.0}%", Grip);
+                }
+            }
+            if(hpText != null)
+            {
+                if(gripBroken || currentHp != maxHp)
+                {
+                    hpText.text = "HP: " + string.Format("{0:0.0}%", currentHp * 0.1f);
+                }
+                else
+                {
+                    hpText.text = "";
+                }
+            }
+        }
+        else
+        {
+            if(hpText != null)
+                hpText.text = "";
+        }
     }
 
     public override void Break(int gripBreak)
     {
-        if(gripBreak <= currentGrip)
+        if(!gripBroken && gripBreak <= currentGrip)
         {
             //BREAK GRIP
-            Debug.Log("Grip Broken!");
-            currentGrip = -1;
-            if(controller != null)
-                controller.combo.Equip(controller.weapons.unarmed);
+            //Debug.Log("Grip Broken!");
+            gripBroken = true;
+            if (controller != null && controller.combo != null)
+            {
+                GameObject o = Instantiate(weaponDropPrefab, transform.position, Quaternion.identity);
+                o.GetComponent<Rigidbody2D>().AddForce(GetWeaponDropForce());
+                o.GetComponent<ItemWeaponPickup>().weapon = controller.combo.currentWeapon;
+
+                controller.combo.Equip("unarmed");
+            }
         }
+    }
+
+    private Vector2 GetWeaponDropForce()
+    {
+        return new Vector2(UnityEngine.Random.Range(0.1f, 1) * Mathf.Sign(UnityEngine.Random.Range(-1, 1)), UnityEngine.Random.Range(-0.1f, 1.5f)).normalized * 600;
+    }
+
+    public void FixGrip()
+    {
+        gripBroken = false;
     }
 
     public override void Damage(int gripDamage, int hpDamage)
@@ -115,7 +193,11 @@ class CombatEntity : IDamageable
     public override void Launch(Vector2 minVector, Vector2 maxVector, bool allowLaunchStun)
     {
         Vector2 v = Vector2.Lerp(minVector, maxVector, LaunchFactor) * launchMultiplier;
-        v.y *= gravityScale;
+        v.y *= hitGravityCompensation;
+        if (v.y < 0 && controller.move.Grounded)
+        {
+            v.y *= -verticalBounceFactor;
+        }
         rigidbody.velocity = Vector2.zero;
         if (allowLaunchStun && v.magnitude > 10 * launchMultiplier)
             StartCoroutine(BigLaunch(v));
@@ -146,7 +228,33 @@ class CombatEntity : IDamageable
 
     public void Kill()
     {
-        Destroy(gameObject);
+        if(killCo == null) killCo = StartCoroutine(KillCoroutine());
+    }
+
+    private Coroutine killCo;
+
+    private IEnumerator KillCoroutine()
+    {
+        if(healthText != null)
+            healthText.text = "DEAD";
+        rigidbody.transform.position = Vector3.down * 100;
+        inactive = true;
+        rigidbody.simulated = false;
+        stunFrames = 0;
+
+        yield return new WaitForSeconds(respawnDelay);
+
+        rigidbody.simulated = true;
+        rigidbody.velocity = Vector3.zero;
+
+        currentHp = maxHp;
+        currentGrip = 0;
+        OnRespawn.Invoke();
+        transform.position = StageHandler.instance.GetRespawnPosition();
+        gripBroken = false;
+
+        inactive = false;
+        killCo = null;
     }
 
     public override string GetEntityName()

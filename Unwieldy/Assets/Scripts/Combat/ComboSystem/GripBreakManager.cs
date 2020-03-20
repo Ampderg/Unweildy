@@ -7,10 +7,10 @@ using UnityEngine;
 
 public enum GripBreak
 {
-    Disabled, //never
-    None, //400-600
-    Weak, //200-400
-    Medium, //150-300
+    Disabled = 0, //never
+    None = 1, //400-600
+    Weak = 2, //300-400
+    Medium = 3, //150-300
     Strong, //90-150
     Extreme, //60-100
     Ultra, //40-50
@@ -19,8 +19,12 @@ public enum GripBreak
 }
 public static class GripBreakManager
 {
-    public static int GetGripBreak(GripBreak gripBreak)
+    public static int GetGripBreak(GripBreak gripBreak, int upgradeChance = 5)
     {
+        if (gripBreak != GripBreak.Guarenteed && gripBreak != GripBreak.Disabled
+             && UnityEngine.Random.Range(0, 100) < upgradeChance)
+            gripBreak = (GripBreak)((int)gripBreak + 1);
+
         switch(gripBreak)
         {
             default:
@@ -29,7 +33,7 @@ public static class GripBreakManager
             case GripBreak.None:
                 return UnityEngine.Random.Range(4000, 6000);
             case GripBreak.Weak:
-                return UnityEngine.Random.Range(2000, 4000);
+                return UnityEngine.Random.Range(3000, 4000);
             case GripBreak.Medium:
                 return UnityEngine.Random.Range(1500, 3000);
             case GripBreak.Strong:

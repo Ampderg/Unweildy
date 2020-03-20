@@ -130,7 +130,6 @@ public abstract class DictionaryDrawer<TK, TV> : PropertyDrawer
             { typeof(Vector3), (rect, value) => EditorGUI.Vector3Field(rect, GUIContent.none, (Vector3)value) },
             { typeof(Bounds), (rect, value) => EditorGUI.BoundsField(rect, (Bounds)value) },
             { typeof(Rect), (rect, value) => EditorGUI.RectField(rect, (Rect)value) },
-
         };
 
     private static T DoField<T>(Rect rect, Type type, T value)
@@ -172,3 +171,6 @@ public abstract class DictionaryDrawer<TK, TV> : PropertyDrawer
         }
     }
 }
+
+[CustomPropertyDrawer(typeof(ObjectDict))]
+public class ObjectDictDrawer : DictionaryDrawer<string, GameObject> { }

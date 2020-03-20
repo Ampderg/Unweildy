@@ -39,5 +39,14 @@ public class HitboxSequenceNode : AttackNode
             }
         }
     }
+
+    public override void Kill()
+    {
+        base.Kill();
+        for(int i = 0; i < index; i++)
+        {
+            sequence[i].hitbox.Kill();
+        }
+    }
 }
 

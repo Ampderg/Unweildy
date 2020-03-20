@@ -25,7 +25,11 @@ public class BaseNode : IGetNode
     protected IGetNode continueAttack;
 
     [SerializeField]
+    protected BaseAttackUtility[] utilities;
+
+    [SerializeField]
     protected bool active;
+    public bool Active { get { return active; } }
     [SerializeField]
     protected bool isAttackFinished;
 
@@ -39,6 +43,14 @@ public class BaseNode : IGetNode
 
         if (effect != null)
             effect.Trigger();
+
+        if(utilities != null)
+        {
+            for(int i = 0; i < utilities.Length; i++)
+            {
+                utilities[i].Trigger();
+            }
+        }
     }
 
     override public IGetNode GetNode()
@@ -74,7 +86,7 @@ public class BaseNode : IGetNode
         return null;
     }
 
-    public void Kill()
+    public virtual void Kill()
     {
         
         active = false;
